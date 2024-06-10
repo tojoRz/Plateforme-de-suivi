@@ -1,0 +1,28 @@
+{% extends "base.dashboard.html" %}
+
+{% block title %}Merci pour votre candidature!{% endblock title %}
+
+{% load static %}
+
+{% block navbar %}      
+<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
+<div class="container-fluid py-1 px-3">
+    <div class="container">
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'images/MSI_LOGO.png' %}" alt="Logo" width="70" height="50" class="d-inline-block align-text-top">
+            </a>
+            </div>
+    </div>
+</div>
+</nav>
+{% endblock navbar %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="container">
+        <h5>Merci pour votre candidature!</h5>
+        <p>Nous avons bien reçu votre candidature et nous l'examinerons avec soin. Nous vous contacterons si nous souhaitons en savoir plus sur votre profil. Merci encore!</p>
+    </div>
+</div>
+{% endblock %}

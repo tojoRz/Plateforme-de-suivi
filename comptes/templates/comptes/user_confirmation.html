@@ -1,0 +1,5 @@
+
+{% for user in object_list %}
+    <p>{{ user.username }} - {{ user.email }}
+    <a href="{% url 'confirmation' %}?user_id={{ user.id }}">Confirmer</a></p>
+{% endfor %}

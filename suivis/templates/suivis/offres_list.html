@@ -1,0 +1,92 @@
+{% extends "base.dashboard.html" %}
+
+{% block title %}Publications{% endblock title %}
+
+{% load static %}
+
+{% block navbar %}      
+<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
+<div class="container-fluid py-1 px-3">
+    <div class="container">
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'images/MSI_LOGO.png' %}" alt="Logo" width="70" height="50" class="d-inline-block align-text-top">
+                </a>
+            <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+                <form action="{% url 'search' %}" method="post">
+                {% csrf_token %}
+                <div class="input-group">
+                    <span class="input-group-text text-body"><i class="fa fa-search fa-lg" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" placeholder="Rechercher ici..." name="sai_search">
+                </div>
+                </form>
+            </div>
+            </div>
+    </div>
+</div>
+</nav>
+{% endblock navbar %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="container">
+        <h4 class="fw-bold text-center text-dark mt-4 mb-4"> {{ countOffre }} offres d'emploi à postuler</h4>
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} me-5">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+        {% for offre in offres  %}
+        <div class="card mb-2 mx-auto border" style="max-width: 150vh;">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="{% static 'images/MSI_LOGO.png' %}" class="img-fluid rounded-start px-3 pb-3 pt-3" alt="...">
+              </div>
+              <div class="col-md-8 border-start">
+                <div class="card-body">
+                  <h4 class="text-primary">{{ en_lettres }} ({{ offre.nombre_poste}}) {{ offre.nom_poste}} ({{ offre.genre}})</h4>
+                  <h5>REF. : {{ offre.reference_poste}}</h5>
+                  <h6>Missions: </h6>
+                  <p class="card-text" style="white-space: pre-line;">{{ offre.mission|slice:":200"}}</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                      <p class="card-text">
+                        <small class="text-muted"><i class="fa fa-map-marker" aria-hidden="true"></i> Villa Lot II Y 53 FT A Andrainarivo Ampahibe</small>
+                      </p>
+                      <p class="card-text">
+                          <small class="text-muted"><i class="fa fa-calendar-o" aria-hidden="true"></i> {{ offre.date_limite|date:'Y-m-d'}}</small>
+                        </p>
+                      <p class="card-text">
+                        <a type="button" class="text-end btn btn-info" href="{% url 'offres_detail' offre.id_offre %}"><i class="fa fa-arrow-right fa-lg" aria-hidden="true"></i></a>
+                      </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="col-md-12 d-flex justify-content-center">
+          <ul class="pagination">
+               {% if offres.has_previous %}
+                  <li class="page-item">
+                      <a class="page-link" href="?pagin={{ offres.previous_page_number }}"><i class="fa fa-chevron-left fa-lg" aria-hidden="true"></i></a>
+                  </li>
+               {% endif %}
+                    <li class="page-item active">
+                        <a class="page-link" href="?page={{ offres.number }}">{{ offres.number }}</a>
+                    </li>
+    
+               {% if offres.has_next %}
+                  <li class="page-item">
+                      <a class="page-link" href="?page={{ offres.next_page_number }}"><i class="fa fa-chevron-right fa-lg" aria-hidden="true"></i></a>
+                  </li>
+               {% endif %}
+          </ul>
+      </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+

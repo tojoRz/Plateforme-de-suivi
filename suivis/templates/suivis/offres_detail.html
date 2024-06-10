@@ -1,0 +1,56 @@
+{% extends "base.dashboard.html" %}
+
+{% block title %}Offres{% endblock title %}
+
+{% load static %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="container">
+        <div class="card mb-3 mx-auto border" style="max-width: 150vh;">
+          <div class="modal-header" style="border-bottom: 0px">
+            <a type="button" class="btn-close bg-danger text-end" onclick="window.history.back()" ></a>
+          </div>
+            <div class="row g-0">
+              <div class="col-md-6 ms-4">
+                <div class="card-body">
+                  <h6 class="fw-bold fst-italic text-secondary "> POUR LES BESOINS D'UNE MISSION <br>DE GRANDE ENVERGURE. NOUS RECRUTONS :</h6>
+                  <h4 class="text-primary mt-4">{{ offre.nombre_poste}} {{ offre.nom_poste}} ({{ offre.genre}})</h4>
+                  <h4 class="text-primary">REF. : {{ offre.reference_poste}}</h4>
+                  <h5 class="mt-4 text-primary">Missions : </h5>
+                  <p class="card-text ms-4" style="white-space: pre-line;">{{ offre.mission}}</p>
+                  <h5 class="mt-4 text-primary">Profil requis : </h5>
+                  <p class="card-text ms-4" style="white-space: pre-line;">{{ offre.profil_requis}}</p>
+                </div>
+              </div>
+              <div class="col-md-5 mt-4 pt-4">
+                <img src="{% static 'images/MSI_LOGO.png' %}" class="img-fluid rounded-start px-3 pb-3 pt-3" alt="...">
+                <img src="{% static 'images/offre_cocher.png' %}" class="img-fluid rounded-start px-3 pb-3 pt-3" alt="...">
+                <p class="card-text text-primary fst-italic px-3">Si vous êtes motivé(e) pour ce poste. <br> préparez : <br> </p>
+                <ul class="card-text text-primary fst-italic ms-4 px-3">
+                  <li>
+                    Un CV avec photo,
+                  </li>
+                  <li>
+                    Une lettre de motivation avec prétention salariale,
+                  </li>
+                  <li>
+                    Une photocopie de votre dernier diplôme,
+                  </li>
+                </ul>
+                <p class="card-text text-primary fst-italic px-3">Vous pouvez cliquer sur le bouton ci-dessous ou les déposer en mains propres à l'adresse Villa Lot II Y 53 FT A Andrainarivo, Ampahibe - Antananarivo 101. </p>
+                <p class="card-text text-primary fst-italic px-3">Date limite : {{ offre.date_limite }}</p>
+                <p class="card-text px-3 text-end">
+                  <a type="button" class=" btn btn-success" href="{% url 'add_postulant' offre.id_offre %}">Postulez maintenant <i class="fa fa-arrow-right fa-lg ms-2" aria-hidden="true"></i></a>
+                </p>
+
+              </div>             
+            </div>
+            <div class="modal-footer bg-primary" style="height: 10vh;"></div> 
+        </div>
+        
+    </div>
+</div>
+
+
+{% endblock content %}

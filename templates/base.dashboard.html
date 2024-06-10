@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="fr">
+{% load static %}
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" type="image/png" sizes="24x24" href="{% static 'images/MSI_LOGO.png' %}">
+  <title>
+    {% block title %}{% endblock title %}
+  </title>
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <!-- Nucleo Icons -->
+  <link href="{% static 'assets/css/nucleo-icons.css' %}" rel="stylesheet" />
+  <link href="{% static 'assets/css/nucleo-svg.css' %}" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link href="{% static 'assets/css/nucleo-svg.css' %}" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="{% static 'assets/css/msi-dashboard.css' %}" rel="stylesheet" />
+  <link  href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" />
+  <link id="pagestyle" href="{% static 'css/dashboard.css' %}" rel="stylesheet" />
+</head>
+
+<body class="g-sidenav-show  bg-gray-100">
+  {% block navbar %}  
+  {% endblock navbar %}
+  <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
+
+
+    {% block content %}
+    {% endblock content %} 
+    
+    
+  </main>
+
+
+  <!--   Core JS Files   -->
+  <script src="{% static 'js/app.js' %}"></script>
+  <script src="{% static 'assets/js/core/popper.min.js' %}"></script>
+  <script src="{% static 'assets/js/core/bootstrap.min.js' %}"></script>
+  <script src="{% static 'assets/js/plugins/perfect-scrollbar.min.js' %}"></script>
+  <script src="{% static 'assets/js/plugins/smooth-scrollbar.min.js' %}"></script>
+  <script src="{% static 'assets/js/plugins/chartjs.min.js' %}"></script>
+  <script>
+    var ctx = document.getElementById("chart-bars").getContext("2d");
+    var nombres_par_mois = {{ nombres_par_mois_json|safe }};
+    
+    new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: ["Jan", "Feb", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sep", "Oct", "Nov", "Déc"],
+            datasets: [{
+                label: "Postulants",
+                tension: 0.4,
+                borderWidth: 0,
+                borderRadius: 4,
+                borderSkipped: false,
+                backgroundColor: "#fff",
+                data: nombres_par_mois,
+                maxBarThickness: 6
+            }, ],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false,
+                }
+            },
+            interaction: {
+                intersect: false,
+                mode: 'index',
+            },
+            scales: {
+                y: {
+                    grid: {
+                        drawBorder: true,
+                        display: false,
+                        drawOnChartArea: false,
+                        drawTicks: false,
+                    },
+                    ticks: {
+                        suggestedMin: 0,
+                        suggestedMax: Math.max(...nombres_par_mois),
+                        beginAtZero: true,
+                        padding: 15,
+                        font: {
+                            size: 14,
+                            family: "Open Sans",
+                            style: 'normal',
+                            lineHeight: 2
+                        },
+                    },
+                },
+                x: {
+                    grid: {
+                        drawBorder: true,
+                        display: false,
+                        drawOnChartArea: false,
+                        drawTicks: false
+                    },
+                    ticks: {
+                        display: true,
+                    },
+                },
+            },
+        },
+    });
+
+
+
+    var ctx2 = document.getElementById("chart-line").getContext("2d");
+
+    var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke1.addColorStop(1, 'rgba(50,205,50,0.2)');
+    gradientStroke1.addColorStop(0.2, 'rgba(72,72,176,0.0)');
+    gradientStroke1.addColorStop(0, 'rgba(203,12,159,0)'); //purple colors
+
+    var gradientStroke2 = ctx2.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke2.addColorStop(1, 'rgba(0,0,205,0.2)');
+    gradientStroke2.addColorStop(0.2, 'rgba(72,72,176,0.0)');
+    gradientStroke2.addColorStop(0, 'rgba(20,23,39,0)'); //purple colors
+
+    var gradientStroke3 = ctx2.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke3.addColorStop(1, 'rgba(255,0,0,0.2)');
+    gradientStroke3.addColorStop(0.2, 'rgba(72,72,176,0.0)');
+    gradientStroke3.addColorStop(0, 'rgba(20,23,39,0)'); //purple colors
+
+    // Fetch data from the backend API endpoint
+  fetch('/api/projects')
+  .then(response => response.json())
+  .then(data => {
+    var labels = data.labels;
+    var dataEnCours = data.en_cours;
+    var dataEnAttente = data.en_attente;
+    var dataTermine = data.termine;
+
+    new Chart(ctx2, {
+      type: "line",
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: "Projets en cours",
+            tension: 0.4,
+            borderWidth: 0,
+            pointRadius: 0,
+            borderColor: "#6BBF50",
+            borderWidth: 3,
+            backgroundColor: gradientStroke1,
+            fill: true,
+            data: dataEnCours,
+            maxBarThickness: 6
+          },
+          {
+            label: "Projets en attente",
+            tension: 0.4,
+            borderWidth: 0,
+            pointRadius: 0,
+            borderColor: "#336D9D",
+            borderWidth: 3,
+            backgroundColor: gradientStroke2,
+            fill: true,
+            data: dataEnAttente,
+            maxBarThickness: 6
+          },
+          {
+            label: "Projets terminés",
+            tension: 0.4,
+            borderWidth: 0,
+            pointRadius: 0,
+            borderColor: "#F0482B",
+            borderWidth: 3,
+            backgroundColor: gradientStroke3,
+            fill: true,
+            data: dataTermine,
+            maxBarThickness: 6
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false,
+          }
+        },
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
+        scales: {
+          y: {
+            grid: {
+              drawBorder: false,
+              display: true,
+              drawOnChartArea: true,
+              drawTicks: false,
+              borderDash: [5, 5]
+            },
+            ticks: {
+              display: true,
+              padding: 10,
+              color: '#b2b9bf',
+              font: {
+                size: 11,
+                family: "Open Sans",
+                style: 'normal',
+                lineHeight: 2
+              },
+            }
+          },
+          x: {
+            grid: {
+              drawBorder: false,
+              display: false,
+              drawOnChartArea: false,
+              drawTicks: false,
+              borderDash: [5, 5]
+            },
+            ticks: {
+              display: true,
+              color: '#b2b9bf',
+              padding: 20,
+              font: {
+                size: 11,
+                family: "Open Sans",
+                style: 'normal',
+                lineHeight: 2
+              },
+            }
+          },
+        },
+      },
+    });
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+  </script>
+  <script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+  </script>
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for MSI Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="{% static 'assets/js/msi-dashboard.min.js' %}"></script>
+
+  <!-- edit -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <script src="{% static "js/scripts.js" %}"></script>
+  <script src="{% static "js/comptes/jquery.min.js" %}"></script>
+  <script src="{% static "js/comptes/popper.min.js" %}"></script>
+  <script src="{% static "js/comptes/app-script.js" %}"></script>
+  <script src="{% static "js/comptes/index.js" %}"></script>
+  <script src="{% static "js/comptes/bootstrap.min.js" %}"></script>
+  <script src="{% static "js/comptes/chart.min.js" %}"></script>
+  <script src="{% static "js/comptes/pace.min.js" %}"></script>
+  <script src="{% static "js/comptes/sidebar-menu.js" %}"></script>
+  <script src="{% static "js/comptes/simplebar.js" %}"></script>
+  <script src="{% static "js/bootstrap.min.js" %}"></script>
+  
+</body>
+
+</html>

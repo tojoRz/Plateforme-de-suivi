@@ -1,0 +1,710 @@
+{% extends "base.dashboard.html" %}
+
+{% block title %}Postulez à une offre{% endblock title %}
+
+{% load static %}
+
+{% block navbar %}      
+<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
+<div class="container-fluid py-1 px-3">
+    <div class="container">
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'images/MSI_LOGO.png' %}" alt="Logo" width="70" height="50" class="d-inline-block align-text-top">
+            </a>
+            </div>
+    </div>
+</div>
+</nav>
+{% endblock navbar %}
+
+{% block content %}
+
+<div class="container-fluid ">
+    <div class="container">
+        <form  method="post" enctype="multipart/form-data" autocomplete="off">
+        {% csrf_token %}
+            <div class="bg-primary pt-2 ps-3" style="height: 10vh;">
+                <h6 class="fw-bold fs-4 text-start text-white">Données personnelles</h6>
+            </div>
+            <div class="card mb-3 mt-4 mx-auto " style="max-width: 200vh; border-radius: 0%;">
+                <div class="row g-0">
+                    <div class="col-md-2">
+                    <div class="card-body d-flex justify-content-center align-items-center">
+                        <img src="{% static 'images/person.svg' %}" class="img-fluid" alt="...">
+                    </div>
+                    </div>
+                    <div class="col-md-5 ">
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-form-label form-control-label" hidden>Nom:</label>
+                                <div class="col-lg-12">
+                                    <input class="form-control" type="text" name="sai_nom" placeholder="Nom" required onblur="mettreEnGras(this)">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-form-label form-control-label" hidden>Prénom:</label>
+                                <div class="col-lg-12">
+                                    <input class="form-control" type="text" name="sai_prenom" placeholder="Prénom" required onblur="mettreEnGras(this)">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-form-label form-control-label" hidden>Adresse:</label>
+                                <div class="col-lg-12">
+                                    <input class="form-control" type="text" name="sai_adresse" placeholder="Adresse" required onblur="mettreEnGras(this)">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-form-label form-control-label" hidden>Email:</label>
+                                <div class="col-lg-12">
+                                    <input class="form-control" type="email" name="sai_email" placeholder="Email*" required onblur="mettreEnGras(this)">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 ">
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-lg-5 col-form-label form-control-label fw-normal ms-2 text-secondary fs-6" >Date de naissance</label>
+                                <div class="col-lg-6">
+                                    <input class="form-control " type="date" name="sai_date_de_naissance" required onblur="mettreEnGras(this)">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-form-label form-control-label" hidden>Code postal:</label>
+                                <div class="col-lg-12">
+                                    <input class="form-control" type="text" name="sai_code_postal" placeholder="Code postal" required onblur="mettreEnGras(this)">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-form-label form-control-label" hidden>Téléphone:</label>
+                                <div class="col-lg-12">
+                                    <input class="form-control" type="number" name="sai_telephone" placeholder="Téléphone" required onblur="mettreEnGras(this)">
+                                </div>
+                            </div>
+                        </div>
+                    </div>             
+                </div>
+            </div>
+            <div class="bg-primary pt-2 ps-3" style="height: 10vh;">
+                <h6 class="fw-bold fs-4 text-start text-white">Formations</h6>
+            </div>
+            <div class="card mb-3 mt-4 mx-auto " style="max-width: 200vh; border-radius: 0%;">
+                <div id="formations">
+
+                    <div class="row g-0 formation">
+
+                        <div class="modal-header" style="border-bottom: 0px">
+                            <button type="button" class="btn-close bg-danger" aria-label="Close" onclick="supprimerFormation(this)"></button>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="card-body d-flex justify-content-center align-items-center">
+                                <img id="Icon_Deine_Dokumente" data-name="Icon Deine Dokumente" src="{% static 'images/formation.png' %}" width="67.5" height="90" viewBox="0 0 67.5 90" alt="Icon Deine Dokumente">
+                                    <path id="Pfad_218562" data-name="Pfad 218562" d="M112.1,26.723L87.26,1.885A5.61,5.61,0,0,0,83.3.25H57.5A11.25,11.25,0,0,0,46.25,11.5V79A11.251,11.251,0,0,0,57.5,90.25h45A11.25,11.25,0,0,0,113.75,79V30.713A5.656,5.656,0,0,0,112.1,26.723ZM85.625,4.228l24.152,24.147H89.844a4.231,4.231,0,0,1-4.219-4.219ZM110.938,79a8.446,8.446,0,0,1-8.437,8.438h-45A8.446,8.446,0,0,1,49.063,79V11.5A8.446,8.446,0,0,1,57.5,3.063H82.813V24.156a7.038,7.038,0,0,0,7.031,7.031h21.094ZM81.406,41.031a1.406,1.406,0,0,0-2.812,0V55.094H64.531a1.406,1.406,0,0,0,0,2.813H78.594V71.969a1.406,1.406,0,0,0,2.813,0V57.906H95.469a1.406,1.406,0,0,0,0-2.812H81.406Z" transform="translate(-46.25 -0.25)" fill="#c8b600"/>
+                                </img>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label form-control-label visually-hidden">Nom de l'école</label>
+                                    <div class="col-lg-12">
+                                        <input class="form-control" type="text" name="sai_ecole_1" id="sai_ecole_1" placeholder="Nom de l'école" onblur="mettreEnGras(this)">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label form-control-label visually-hidden">Résultat obtenu :</label>
+                                    <div class="col-lg-12">
+                                        <input class="form-control" type="text" name="sai_resultat_obtenu_1" id="sai_resultat_obtenu_1" placeholder="Résultat obtenu" onblur="mettreEnGras(this)">
+                                    </div>
+                                </div> 
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label form-control-label visually-hidden">Activité/Association</label>
+                                    <div class="col-lg-12">
+                                        <input class="form-control" type="text" name="sai_activite_association_1" id="sai_activite_association_1" placeholder="Activité/Association" onblur="mettreEnGras(this)">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label form-control-label visually-hidden">Domaine d'étude :</label>
+                                    <div class="col-lg-12">
+                                        <input class="form-control" type="text" name="sai_domaine_d_etude_1" id="sai_domaine_d_etude_1" placeholder="Domaine d'étude" onblur="mettreEnGras(this)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <label class="col-lg-5 col-form-label form-control-label fw-normal text-secondary fs-6">Date de début</label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" type="date" name="sai_date_debut_for_1" id="sai_date_debut_for_1" onblur="mettreEnGras(this)">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-5 col-form-label form-control-label fw-normal text-secondary fs-6">Date de fin</label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" type="date" name="sai_date_fin_for_1" id="sai_date_fin_for_1" onblur="mettreEnGras(this)">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label form-control-label visually-hidden">Diplôme :</label>
+                                    <div class="col-lg-12">
+                                        <input class="form-control" type="text" name="sai_diplome_1" id="sai_diplome_1" placeholder="Diplôme" onblur="mettreEnGras(this)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer" style="height: 10vh;">
+                    <button type="button" class="btn btn-secondary me-4" onclick="ajouterFormation()">Ajouter une autre</button>
+                </div>
+                 
+            </div>
+
+            <div class="bg-primary pt-2 ps-3" style="height: 10vh;">
+                <h6 class="fw-bold fs-4 text-start text-white">Expériences</h6>
+            </div>
+
+            <div class="card mb-3 mt-4 mx-auto " style="max-width: 200vh; border-radius: 0%;">
+
+                <div id="experiences">
+
+                    <div class="row g-0 experience">
+                        <div class="modal-header" style="border-bottom: 0px">
+                            <button type="button" class="btn-close bg-danger"  aria-label="Close" onclick="supprimerExperience(this)"></button>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="card-body d-flex justify-content-center align-items-center">
+                                <img id="Icon_Deine_Dokumente" data-name="Icon Deine Dokumente"
+                                    src="{% static 'images/experience.png' %}" width="67.5" height="80" viewBox="0 0 67.5 90">
+                                    <path id="Pfad_218562" data-name="Pfad 218562" d="M112.1,26.723,87.26,1.885A5.61,5.61,0,0,0,83.3.25H57.5A11.25,11.25,0,0,0,46.25,11.5V79A11.251,11.251,0,0,0,57.5,90.25h45A11.25,11.25,0,0,0,113.75,79V30.713A5.656,5.656,0,0,0,112.1,26.723ZM85.625,4.228l24.152,24.147H89.844a4.231,4.231,0,0,1-4.219-4.219ZM110.938,79a8.446,8.446,0,0,1-8.437,8.438h-45A8.446,8.446,0,0,1,49.063,79V11.5A8.446,8.446,0,0,1,57.5,3.063H82.813V24.156a7.038,7.038,0,0,0,7.031,7.031h21.094ZM81.406,41.031a1.406,1.406,0,0,0-2.812,0V55.094H64.531a1.406,1.406,0,0,0,0,2.813H78.594V71.969a1.406,1.406,0,0,0,2.813,0V57.906H95.469a1.406,1.406,0,0,0,0-2.812H81.406Z" transform="translate(-46.25 -0.25)" fill="#c8b600"/>
+                                </img>
+                            </div>
+                        </div>
+                        <div class="col-md-5 ">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label form-control-label d-none">Nom de l'entreprise:</label>
+                                    <div class="col-lg-12">
+                                        <input class="form-control" type="text" name="sai_nom_entreprise_1" id="sai_nom_entreprise_1" placeholder="Nom de l'entreprise" onblur="mettreEnGras(this)">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label form-control-label d-none">Intitulé de poste:</label>
+                                    <div class="col-lg-12">
+                                        <input class="form-control" type="text" name="sai_intituler_d_poste_1" id="sai_intituler_d_poste_1"  placeholder="Intitulé de poste" onblur="mettreEnGras(this)">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label form-control-label d-none">Type d'emploi:</label>
+                                    <div class="col-lg-12">
+                                        <select class="form-select" name="sai_type_d_emploi_1" id="sai_type_d_emploi_1" placeholder="Sélectionnez un type d'emploi" onblur="mettreEnGras(this)">
+                                            <option value="CDI">CDI</option>
+                                            <option value="CDD">CDD</option>
+                                            <option value="Stage">Stage</option>
+                                            <option value="Freelance">Freelance</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label form-control-label d-none">Lieu:</label>
+                                    <div class="col-lg-12">
+                                        <input class="form-control" type="text" name="sai_lieu_1" id="sai_lieu_1"  placeholder="Lieu" onblur="mettreEnGras(this)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <label class="col-lg-5 col-form-label form-control-label fw-normal text-secondary fs-6" >Date de début</label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control " type="date" name="sai_date_debut_exp_1" id="sai_date_debut_exp_1" onblur="mettreEnGras(this)">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-5 col-form-label form-control-label fw-normal text-secondary fs-6" >Date de fin</label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control " type="date" name="sai_date_fin_exp_1" id="sai_date_fin_exp_1" onblur="mettreEnGras(this)">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label form-control-label d-none">Titre:</label>
+                                    <div class="col-lg-12">
+                                        <input class="form-control" type="text" name="sai_titre_1" id="sai_titre_1" placeholder="Titre" onblur="mettreEnGras(this)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer" style="height: 10vh;">
+                    <button type="button" class="btn btn-secondary me-4"  onclick="ajouterExperience()">Ajouter une autre</button>
+                </div> 
+
+
+            </div>
+
+            <div class="bg-primary pt-2 ps-3" style="height: 10vh;">
+                <h6 class="fw-bold fs-4 text-start text-white">Langages</h6>
+            </div>
+            <div class="card mb-3 mt-4 mx-auto " style="max-width: 200vh; border-radius: 0%;">
+                <div class="row g-0">
+                    <div class="col-md-2">
+                    <div class="card-body d-flex justify-content-center align-items-center">
+                        <img id="Icon_Deine_Dokumente" data-name="Icon Deine Dokumente"
+                            src="{% static 'images/langue.png' %}" width="67.5" height="90" viewBox="0 0 67.5 90">
+                            <path id="Pfad_218562" data-name="Pfad 218562" d="M112.1,26.723,87.26,1.885A5.61,5.61,0,0,0,83.3.25H57.5A11.25,11.25,0,0,0,46.25,11.5V79A11.251,11.251,0,0,0,57.5,90.25h45A11.25,11.25,0,0,0,113.75,79V30.713A5.656,5.656,0,0,0,112.1,26.723ZM85.625,4.228l24.152,24.147H89.844a4.231,4.231,0,0,1-4.219-4.219ZM110.938,79a8.446,8.446,0,0,1-8.437,8.438h-45A8.446,8.446,0,0,1,49.063,79V11.5A8.446,8.446,0,0,1,57.5,3.063H82.813V24.156a7.038,7.038,0,0,0,7.031,7.031h21.094ZM81.406,41.031a1.406,1.406,0,0,0-2.812,0V55.094H64.531a1.406,1.406,0,0,0,0,2.813H78.594V71.969a1.406,1.406,0,0,0,2.813,0V57.906H95.469a1.406,1.406,0,0,0,0-2.812H81.406Z" transform="translate(-46.25 -0.25)" fill="#c8b600"/>
+                        </img>
+                    </div>
+                    </div>
+                    <div class="col-md-8 ">
+                        <div class="card-body">
+                            <div id="langages">
+                                <div class="form-group row langage">
+                                    <label class="col-lg-4 col-form-label form-control-label d-none">Langages :</label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" type="text" name="sai_langage_1" id="sai_langage_1" placeholder="Langage" onblur="mettreEnGras(this)">
+                                    </div>
+                                    <button class="col-lg-4 btn-close bg-danger mt-2 ms-2" onclick="supprimerLangage(this)"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="height: 10vh;">
+                        <button type="button" class="btn btn-secondary me-4" onclick="ajouterLangage()">Ajouter une autre</button>                            
+                    </div>             
+                </div>
+            </div>
+            <div class="bg-primary pt-2 ps-3" style="height: 10vh;">
+                <h6 class="fw-bold fs-4 text-start text-white">Compétences</h6>
+            </div>
+            <div class="card mb-3 mt-4 mx-auto " style="max-width: 200vh; border-radius: 0%;">
+                <div class="row g-0">
+                    <div class="col-md-2">
+                    <div class="card-body d-flex justify-content-center align-items-center">
+                        <img id="Icon_Deine_Dokumente" data-name="Icon Deine Dokumente"
+                            src="{% static 'images/competence.png' %}" width="67.5" height="90" viewBox="0 0 67.5 90">
+                            <path id="Pfad_218562" data-name="Pfad 218562" d="M112.1,26.723,87.26,1.885A5.61,5.61,0,0,0,83.3.25H57.5A11.25,11.25,0,0,0,46.25,11.5V79A11.251,11.251,0,0,0,57.5,90.25h45A11.25,11.25,0,0,0,113.75,79V30.713A5.656,5.656,0,0,0,112.1,26.723ZM85.625,4.228l24.152,24.147H89.844a4.231,4.231,0,0,1-4.219-4.219ZM110.938,79a8.446,8.446,0,0,1-8.437,8.438h-45A8.446,8.446,0,0,1,49.063,79V11.5A8.446,8.446,0,0,1,57.5,3.063H82.813V24.156a7.038,7.038,0,0,0,7.031,7.031h21.094ZM81.406,41.031a1.406,1.406,0,0,0-2.812,0V55.094H64.531a1.406,1.406,0,0,0,0,2.813H78.594V71.969a1.406,1.406,0,0,0,2.813,0V57.906H95.469a1.406,1.406,0,0,0,0-2.812H81.406Z" transform="translate(-46.25 -0.25)" fill="#c8b600"/>
+                        </img>
+                    </div>
+                    </div>
+                    <div class="col-md-8 ">
+                        <div class="card-body">
+                            <div id="competences">
+                                <div class="form-group row competence">
+                                    <label class="col-lg-4 col-form-label form-control-label d-none">Compétences :</label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" type="text" name="sai_competence_1" id="sai_competence_1" placeholder="Compétence" onblur="mettreEnGras(this)">
+                                    </div>
+                                    <button class="col-lg-4 btn-close bg-danger mt-2 ms-2" onclick="supprimerCompetence(this)"></button>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="height: 10vh;">
+                        <button type="button" class="btn btn-secondary me-4" onclick="ajouterCompetence()">Ajouter une autre</button>
+                    </div>             
+                </div>
+            </div>
+            <div class="bg-primary pt-2 ps-3" style="height: 10vh;">
+                <h6 class="fw-bold fs-4 text-start text-white">Vos documents</h6>
+            </div>
+            <div class="card mb-3 mt-4 mx-auto " style="max-width: 200vh; border-radius: 0%;">
+                <div class="row g-0">
+                    <div class="col-md-2">
+                    <div class="card-body d-flex justify-content-center align-items-center">
+                        <img src="{% static 'images/documents.svg' %}" class="img-fluid" alt="...">
+                    </div>
+                    </div>
+                    <div class="col-md-10 ">
+                        <div class="card-body">
+                            <p class="fs-6">
+                                Afin que nous puissions vous répondre le plus rapidement possible avec un premier retour d'information, nous avons idéalement besoin des documents suivants : votre CV, une preuve de votre diplôme sous-jacent et/ou un aperçu actuel de vos notes et de vos éventuelles références . <br> <br>Formats de fichiers autorisés : pdf, doc, docx, png, jpeg, max 8 Mo par fichier. <br>
+                            </p>
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-form-label form-control-label ms-4" style="border: none;" for="inputGroupFile01">CV / DOCUMENTS COMPLETS *</label>
+                                <div class="col-lg-7 ">
+                                    <input title="Télécharger un document" data-bs-toggle="tooltip" data-bs-placement="top" class="form-control" type="file" name="sai_CV" value="Télécharger un document" required onblur="mettreEnGras(this)">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-form-label form-control-label ms-4" style="border: none;" for="inputGroupFile01">LM / DOCUMENTS COMPLETS *</label>
+                                <div class="col-lg-7 ">
+                                    <input title="Télécharger un document" data-bs-toggle="tooltip" data-bs-placement="top" class="form-control" type="file" name="sai_LM" required onblur="mettreEnGras(this)">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-form-label form-control-label ms-4" style="border: none;" for="inputGroupFile01">COPIE DE DIPLOME *</label>
+                                <div class="col-lg-7 ">
+                                    <input title="Télécharger un document" data-bs-toggle="tooltip" data-bs-placement="top" class="form-control" type="file" name="sai_copie_diplome" required onblur="mettreEnGras(this)">
+                                </div>
+                            </div>
+                        </div>
+                    </div>             
+                </div>
+            </div>
+            <div class="card-text px-3 mt-4 text-end">
+                <button type="submit" class="btn btn-success">Envoyer une candidature</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .disabled-input {
+        border: none;
+        font-weight: bold;
+    }
+</style>
+
+<script>
+    let countL = 1;
+
+    function ajouterLangage() {
+      countL++;  
+            
+      
+      let lastInput = document.getElementById(`sai_langage_${countL-1}`);
+      lastInput.disabled = true;
+      lastInput.classList.add("disabled-input");
+      lastInput.removeAttribute("onblur"); // suppression de l'événement onblur
+
+      
+
+      
+      let html = `
+        <div class="form-group row langage">
+            <label class="col-lg-4 col-form-label form-control-label d-none">Langages :</label>
+            <div class="col-lg-6">
+                <input class="form-control" type="text" name="sai_langage_${countL}" id="sai_langage_${countL}" placeholder="Langage" required onblur="mettreEnGras(this)" >
+            </div>
+            <button class="col-lg-4 btn-close bg-danger mt-2 ms-2" onclick="supprimerLangage(this)"></button>
+
+        </div>
+      `;
+
+      
+      let langages = document.getElementById("langages");
+      langages.insertAdjacentHTML('beforeend', html);
+      
+    }
+    
+    function mettreEnGras(input) {
+      input.style.fontWeight = "bold";
+      input.style.background = "#eee";
+      input.style.border = "none";
+
+    }
+
+    function supprimerLangage(elem) {
+        if (confirm("Êtes-vous sûr de vouloir supprimer cette langage ?")) {
+          elem.parentNode.remove(); // Supprime l'élément parent du bouton (div.form-group.row.langage)
+        }
+    }
+    
+</script>
+  
+
+<!-- Competence -->
+<script>
+    let countC = 1;
+
+    function ajouterCompetence() {
+        countC++;  
+              
+        let lastInput = document.getElementById(`sai_competence_${countC-1}`);
+        lastInput.disabled = true;
+        lastInput.classList.add("disabled-input");
+        lastInput.removeAttribute("onblur"); // suppression de l'événement onblur
+
+        let html = `
+        <div class="form-group row competence">
+            <label class="col-lg-4 col-form-label form-control-label d-none">Compétences :</label>
+            <div class="col-lg-6">
+                <input class="form-control" type="text" name="sai_competence_${countC}" id="sai_competence_${countC}" placeholder="Compétence" required onblur="mettreEnGras(this)">
+            </div>
+            <button class="col-lg-4 btn-close bg-danger mt-2 ms-2" onclick="supprimerCompetence(this)"></button>
+        </div>
+        `;
+
+        let competences = document.getElementById("competences");
+        competences.insertAdjacentHTML('beforeend', html);
+    }
+
+    function mettreEnGras(input) {
+        input.style.fontWeight = "bold";
+        input.style.background = "#eee";
+        input.style.border = "none";
+    }
+
+    function supprimerCompetence(elem) {
+        if (confirm("Êtes-vous sûr de vouloir supprimer cette compétence ?")) {
+            elem.parentNode.remove(); // Supprime l'élément parent du bouton (div.form-group.row.competence)
+        }
+    }
+</script>
+
+<!-- formation -->
+<script>
+    let countF = 1;
+
+    function ajouterFormation() {
+        countF++;  
+              
+        let lastInput8 = document.getElementById(`sai_ecole_${countF-1}`) 
+        lastInput8.disabled = true;
+        lastInput8.classList.add("disabled-input");
+        lastInput8.removeAttribute("onblur"); // suppression de l'événement onblur
+        
+        let lastInput9 = document.getElementById(`sai_resultat_obtenu_${countF-1}`) 
+        lastInput9.disabled = true;
+        lastInput9.classList.add("disabled-input");
+        lastInput9.removeAttribute("onblur"); // suppression de l'événement onblur
+
+        let lastInput10 = document.getElementById(`sai_activite_association_${countF-1}`)
+        lastInput10.disabled = true;
+        lastInput10.classList.add("disabled-input");
+        lastInput10.removeAttribute("onblur"); // suppression de l'événement onblur
+        
+        let lastInput11 = document.getElementById(`sai_domaine_d_etude_${countF-1}`) 
+        lastInput11.disabled = true;
+        lastInput11.classList.add("disabled-input");
+        lastInput11.removeAttribute("onblur"); // suppression de l'événement onblur
+
+        let lastInput12 = document.getElementById(`sai_date_debut_for_${countF-1}`)
+        lastInput12.disabled = true;
+        lastInput12.classList.add("disabled-input");
+        lastInput12.removeAttribute("onblur"); // suppression de l'événement onblur
+        
+        let lastInput13 = document.getElementById(`sai_date_fin_for_${countF-1}`) 
+        lastInput13.disabled = true;
+        lastInput13.classList.add("disabled-input");
+        lastInput13.removeAttribute("onblur"); // suppression de l'événement onblur
+        
+        let lastInput14 = document.getElementById(`sai_diplome_${countF-1}`);
+        lastInput14.disabled = true;
+        lastInput14.classList.add("disabled-input");
+        lastInput14.removeAttribute("onblur"); // suppression de l'événement onblur
+
+        let html = `
+        <div class="row g-0 formation">
+            <div class="modal-header" style="border-bottom: 0px">
+                <button type="button" class="btn-close bg-danger"  aria-label="Close" onclick="supprimerFormation(this)"></button>
+            </div>
+            <div class="col-md-2">
+                <div class="card-body d-flex justify-content-center align-items-center">
+                    <img id="Icon_Deine_Dokumente" data-name="Icon Deine Dokumente" src="{% static 'images/formation.png' %}" width="67.5" height="90" viewBox="0 0 67.5 90">
+                        <path id="Pfad_218562" data-name="Pfad 218562" d="M112.1,26.723,87.26,1.885A5.61,5.61,0,0,0,83.3.25H57.5A11.25,11.25,0,0,0,46.25,11.5V79A11.251,11.251,0,0,0,57.5,90.25h45A11.25,11.25,0,0,0,113.75,79V30.713A5.656,5.656,0,0,0,112.1,26.723ZM85.625,4.228l24.152,24.147H89.844a4.231,4.231,0,0,1-4.219-4.219ZM110.938,79a8.446,8.446,0,0,1-8.437,8.438h-45A8.446,8.446,0,0,1,49.063,79V11.5A8.446,8.446,0,0,1,57.5,3.063H82.813V24.156a7.038,7.038,0,0,0,7.031,7.031h21.094ZM81.406,41.031a1.406,1.406,0,0,0-2.812,0V55.094H64.531a1.406,1.406,0,0,0,0,2.813H78.594V71.969a1.406,1.406,0,0,0,2.813,0V57.906H95.469a1.406,1.406,0,0,0,0-2.812H81.406Z" transform="translate(-46.25 -0.25)" fill="#c8b600"/>
+                    </img>
+                </div>
+            </div>
+            <div class="col-md-5 ">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label form-control-label d-none">Nom de l'école</label>
+                        <div class="col-lg-12">
+                            <input class="form-control" type="text" name="sai_ecole_${countF}" id="sai_ecole_${countF}"  placeholder="Nom de l'école" required onblur="mettreEnGras(this)">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label form-control-label d-none">Résultat obtenu :</label>
+                        <div class="col-lg-12">
+                            <input class="form-control" type="text" name="sai_resultat_obtenu_${countF}" id="sai_resultat_obtenu_${countF}" placeholder="Résultat obtenu" required onblur="mettreEnGras(this)">
+                        </div>
+                    </div> 
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label form-control-label d-none">Activité/Association</label>
+                        <div class="col-lg-12">
+                            <input class="form-control" type="text" name="sai_activite_association_${countF}" id="sai_activite_association_${countF}" placeholder="Activité/Association" required onblur="mettreEnGras(this)">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label form-control-label d-none">Domaine d'étude :</label>
+                        <div class="col-lg-12">
+                            <input class="form-control" type="text" name="sai_domaine_d_etude_${countF}" id="sai_domaine_d_etude_${countF}"  placeholder="Domaine d'étude" required onblur="mettreEnGras(this)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-lg-5 col-form-label form-control-label fw-normal text-secondary fs-6" >Date de début</label>
+                        <div class="col-lg-6">
+                            <input class="form-control " type="date" name="sai_date_debut_for_${countF}" id="sai_date_debut_for_${countF}" required onblur="mettreEnGras(this)">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-5 col-form-label form-control-label fw-normal text-secondary fs-6" >Date de fin</label>
+                        <div class="col-lg-6">
+                            <input class="form-control " type="date" name="sai_date_fin_for_${countF}" id="sai_date_fin_for_${countF}" required onblur="mettreEnGras(this)">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label form-control-label d-none">Diplôme :</label>
+                        <div class="col-lg-12">
+                            <input class="form-control" type="text" name="sai_diplome_${countF}" id="sai_diplome_${countF}" placeholder="Diplôme" required onblur="mettreEnGras(this)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+
+        let formations = document.getElementById("formations");
+        formations.insertAdjacentHTML('beforeend', html);
+    }
+
+    function mettreEnGras(input) {
+        input.style.fontWeight = "bold";
+        input.style.background = "#eee";
+        input.style.border = "none";
+    }
+
+    function supprimerFormation(elem) {
+        if (confirm("Êtes-vous sûr de vouloir supprimer cette formation ?")) {
+            elem.parentNode.parentNode.remove(); // Supprime l'élément parent du bouton (div.row.g-0.formation)
+        }
+    }
+</script>
+
+
+<!-- experience -->
+
+<script>
+    let countE = 1;
+
+    function ajouterExperience() {
+        countE++;  
+              
+        let lastInput1 = document.getElementById(`sai_nom_entreprise_${countE-1}`) 
+        lastInput1.disabled = true;
+        lastInput1.classList.add("disabled-input");
+        lastInput1.removeAttribute("onblur"); // suppression de l'événement onblur
+        
+        let lastInput2 = document.getElementById(`sai_intituler_d_poste_${countE-1}`) 
+        lastInput2.disabled = true;
+        lastInput2.classList.add("disabled-input");
+        lastInput2.removeAttribute("onblur"); // suppression de l'événement onblur
+
+        let lastInput3 = document.getElementById(`sai_type_d_emploi_${countE-1}`)
+        lastInput3.disabled = true;
+        lastInput3.classList.add("disabled-input");
+        lastInput3.removeAttribute("onblur"); // suppression de l'événement onblur
+        
+        let lastInput4 = document.getElementById(`sai_lieu_${countE-1}`) 
+        lastInput4.disabled = true;
+        lastInput4.classList.add("disabled-input");
+        lastInput4.removeAttribute("onblur"); // suppression de l'événement onblur
+
+        let lastInput5 = document.getElementById(`sai_date_debut_exp_${countE-1}`)
+        lastInput5.disabled = true;
+        lastInput5.classList.add("disabled-input");
+        lastInput5.removeAttribute("onblur"); // suppression de l'événement onblur
+        
+        let lastInput6 = document.getElementById(`sai_date_fin_exp_${countE-1}`) 
+        lastInput6.disabled = true;
+        lastInput6.classList.add("disabled-input");
+        lastInput6.removeAttribute("onblur"); // suppression de l'événement onblur
+        
+        let lastInput7 = document.getElementById(`sai_titre_${countE-1}`);
+        lastInput7.disabled = true;
+        lastInput7.classList.add("disabled-input");
+        lastInput7.removeAttribute("onblur"); // suppression de l'événement onblur
+
+        let html = `
+        <div class="row g-0 experience">
+            <div class="modal-header" style="border-bottom: 0px">
+                <button type="button" class="btn-close bg-danger"  aria-label="Close" onclick="supprimerExperience(this)"></button>
+            </div>
+            <div class="col-md-2">
+                <div class="card-body d-flex justify-content-center align-items-center">
+                    <img id="Icon_Deine_Dokumente" data-name="Icon Deine Dokumente"
+                        src="{% static 'images/experience.png' %}" width="67.5" height="80" viewBox="0 0 67.5 90">
+                        <path id="Pfad_218562" data-name="Pfad 218562" d="M112.1,26.723,87.26,1.885A5.61,5.61,0,0,0,83.3.25H57.5A11.25,11.25,0,0,0,46.25,11.5V79A11.251,11.251,0,0,0,57.5,90.25h45A11.25,11.25,0,0,0,113.75,79V30.713A5.656,5.656,0,0,0,112.1,26.723ZM85.625,4.228l24.152,24.147H89.844a4.231,4.231,0,0,1-4.219-4.219ZM110.938,79a8.446,8.446,0,0,1-8.437,8.438h-45A8.446,8.446,0,0,1,49.063,79V11.5A8.446,8.446,0,0,1,57.5,3.063H82.813V24.156a7.038,7.038,0,0,0,7.031,7.031h21.094ZM81.406,41.031a1.406,1.406,0,0,0-2.812,0V55.094H64.531a1.406,1.406,0,0,0,0,2.813H78.594V71.969a1.406,1.406,0,0,0,2.813,0V57.906H95.469a1.406,1.406,0,0,0,0-2.812H81.406Z" transform="translate(-46.25 -0.25)" fill="#c8b600"/>
+                    </img>
+                </div>
+            </div>
+            <div class="col-md-5 ">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label form-control-label d-none">Nom de l'entreprise:</label>
+                        <div class="col-lg-12">
+                            <input class="form-control" type="text" name="sai_nom_entreprise_${countE}" id="sai_nom_entreprise_${countE}" placeholder="Nom de l'entreprise" required onblur="mettreEnGras(this)">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label form-control-label d-none">Intitulé de poste:</label>
+                        <div class="col-lg-12">
+                            <input class="form-control" type="text" name="sai_intituler_d_poste_${countE}" id="sai_intituler_d_poste_${countE}"  placeholder="Intitulé de poste" required onblur="mettreEnGras(this)">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label form-control-label d-none">Type d'emploi:</label>
+                        <div class="col-lg-12">
+                            <select class="form-select" name="sai_type_d_emploi_${countE}" id="sai_type_d_emploi_${countE}" placeholder="Sélectionnez un type d'emploi" onblur="mettreEnGras(this)">
+                                <option value="CDI">CDI</option>
+                                <option value="CDD">CDD</option>
+                                <option value="Stage">Stage</option>
+                                <option value="Freelance">Freelance</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label form-control-label d-none">Lieu:</label>
+                        <div class="col-lg-12">
+                            <input class="form-control" type="text" name="sai_lieu_${countE}" id="sai_lieu_${countE}"  placeholder="Lieu" required onblur="mettreEnGras(this)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-lg-5 col-form-label form-control-label fw-normal text-secondary fs-6" >Date de début</label>
+                        <div class="col-lg-6">
+                            <input class="form-control " type="date" name="sai_date_debut_exp_${countE}" id="sai_date_debut_exp_${countE}" required onblur="mettreEnGras(this)">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-5 col-form-label form-control-label fw-normal text-secondary fs-6" >Date de fin</label>
+                        <div class="col-lg-6">
+                            <input class="form-control " type="date" name="sai_date_fin_exp_${countE}" id="sai_date_fin_exp_${countE}" required onblur="mettreEnGras(this)">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label form-control-label d-none">Titre:</label>
+                        <div class="col-lg-12">
+                            <input class="form-control" type="text" name="sai_titre_${countE}" id="sai_titre_${countE}" placeholder="Titre" required onblur="mettreEnGras(this)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+
+        let experiences = document.getElementById("experiences");
+        experiences.insertAdjacentHTML('beforeend', html);
+    }
+
+    function mettreEnGras(input) {
+        input.style.fontWeight = "bold";
+        input.style.background = "#eee";
+        input.style.border = "none";
+    }
+
+    function supprimerExperience(elem) {
+        if (confirm("Êtes-vous sûr de vouloir supprimer cette expérience ?")) {
+            elem.parentNode.parentNode.remove(); // Supprime l'élément parent du bouton (div.row.g-0.experience)
+        }
+    }
+</script>
+
+{% endblock content %}
+
+
