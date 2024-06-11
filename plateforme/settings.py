@@ -10,13 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+
 from pathlib import Path
-import django_heroku
+import os
+from decouple import config, Csv
 import dj_database_url
-# import pymysql
 
 
-# pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,12 +26,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-oeh#kup9_m2&y-kkc^1a!5*pq!#spsk*a3o817c9!i_9itqv-l'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast=Csv())
 
 
 # Application definition
@@ -89,31 +89,8 @@ WSGI_APPLICATION = 'plateforme.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-# DATABASES =     {
-#         'default':      {
-#                 'ENGINE': 'django.db.backends.mysql',
-#                 'OPTIONS': {
-#                                 'sql_mode': 'traditional',
-#                         },
-#                 'NAME': 'dbases',
-#                 'HOST': '127.0.0.1',
-#                 'USER': 'root',
-#                 'PASSWORD':'',
-#                 'PORT':3306,
-#                 'CHARSET': 'utf8mb4',
-#                 'COLLATION': 'utf8mb4_general_ci',
-#                         }
-# }
-
 DATABASES = {
-    'default' : dj_database_url.conig()
+    'default': dj_database_url.parse(config('DATABASE_URL'))
 }
 
 # Password validation
@@ -177,10 +154,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'mail.msi.mg'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "noreply@msi.mg"
-EMAIL_HOST_PASSWORD = "cGtFf@]8N$OAjKojwD"
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
-django_heroku.settings(locals())
 
 
 
