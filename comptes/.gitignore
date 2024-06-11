@@ -1,0 +1,43 @@
+# Python
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+venv.bak/
+*.env
+.env/
+
+# Django stuff:
+*.log
+local_settings.py
+
+# Ignore database URL for security reasons
+DATABASE_URL
+
+# Ignore media and static files
+/media/
+/staticfiles/
+/static/
+
+# Ignore temporary files
+*.swp
+*~
+
+# Ignore IDEs and editors configurations
+.vscode/
+
+# Ignore deployment files
+.DS_Store
+*.bak
+*.orig
+*.out
+
+# Ignore Python virtual environment
+venv/
+
+# Ignore pipenv files
+Pipfile.lock
